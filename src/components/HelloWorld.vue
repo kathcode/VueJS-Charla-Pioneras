@@ -1,12 +1,14 @@
 <template>
   <div>
-    <div v-for="pet in pets">
+    <div v-for="pet in pets" v-bind:key="pet.message">
       {{ pet.message }}
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'HelloWorld',
   props: {
@@ -22,7 +24,9 @@ export default {
   mounted() {
     axios
       .get('https://dog.ceo/api/breeds/image/random')
-      .then(response => (this.pets = response))
+      .then(response => (this.pets = response));
+    
+    console.log(this.pets)
   }
 }
 </script>
