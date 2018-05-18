@@ -1,32 +1,27 @@
 <template>
   <div>
-    <div v-for="pet in pets" v-bind:key="pet.message">
-      {{ pet.message }}
+    <button @click="addPet">Add Pet</button>
+    <div v-for="(pet, index) of pets" :key="index">
+      {{ pet.name }}
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+// Import firebase
+import { petsRef } from '../firebase'
 
 export default {
   name: 'HelloWorld',
-  props: {
-    msg: String
+  firebase: {
+    pets: petsRef
   },
-  
-  data() {
-    return {
-      pets: []
+  methods: {
+    addPet () {
+      petsRef.push({
+        name: 'muñeca'
+      })
     }
-  },
-
-  mounted() {
-    axios
-      .get('https://dog.ceo/api/breeds/image/random')
-      .then(response => (this.pets = response));
-    
-    console.log(this.pets)
   }
 }
 </script>
